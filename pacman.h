@@ -33,6 +33,7 @@ public:
 
     void keepGoingOrStop();
     void nextDestinationHandler();
+    void directionHandler();
 
     int movementScale = 10;
     bool is_moving = true;

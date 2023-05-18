@@ -147,4 +147,5 @@ void GamePanel::gridPointsLocator(){
 
     P1->left = O1;
     P1->down = M1;
+
 }

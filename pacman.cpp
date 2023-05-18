@@ -16,46 +16,21 @@ PacMan::PacMan(QWidget *parent)
 
 }
 
-//void PacMan::keepGoingOrStop(){
-//    switch (this->direction) {
-//    case Up:
-//        if(this->current_destination->up != NULL){
-//            this->next_destination = this->current_destination->up;
-//        }else{
-//            this->is_moving = false;
-//            this->next_destination = NULL;
-//        }
-//        break;
-
-//    case Right:
-//        if(this->current_destination->right != NULL){
-//            this->next_destination = this->current_destination->right;
-//        }else{
-//            this->is_moving = false;
-//            this->next_destination = NULL;
-//        }
-//        break;
-
-//    case Down:
-//        if(this->current_destination->down != NULL){
-//            this->next_destination = this->current_destination->down;
-//        }else{
-//            this->is_moving = false;
-//            this->next_destination = NULL;
-//        }
-//        break;
-
-//    case Left:
-//        if(this->current_destination->left != NULL){
-//            this->next_destination = this->current_destination->left;
-//        }else{
-//            this->is_moving = false;
-//            this->next_destination = NULL;
-//        }
-//        break;
-
-//    }
-//}
+void PacMan::directionHandler(){
+    if(current_destination->location.x() == this->location.x()){
+        if(current_destination->location.y() > this->location.y()){
+            this->direction = Down;
+        }else if(current_destination->location.y() < this->location.y()){
+            this->direction = Up;
+        }
+    }else{
+        if(current_destination->location.x() > this->location.x()){
+            this->direction = Right;
+        }else if(current_destination->location.x() < this->location.x()){
+            this->direction = Left;
+        }
+    }
+}
 
 void PacMan::nextDestinationHandler(){
     switch(last_clicked_button){
@@ -64,34 +39,23 @@ void PacMan::nextDestinationHandler(){
                 this->is_moving = true;
                 this->next_destination = this->current_destination->up;
             }
-            else{
-//                this->keepGoingOrStop();
-            }
             break;
         case Right:
             if(this->current_destination->right != NULL){
                 this->next_destination = this->current_destination->right;
                 this->is_moving = true;
             }
-            else{
-//                this->keepGoingOrStop();
-            }
             break;
         case Down:
             if(this->current_destination->down != NULL){
                 this->next_destination = this->current_destination->down;
                 this->is_moving = true;
-            }else{
-//                this->keepGoingOrStop();
             }
             break;
         case Left:
             if(this->current_destination->left != NULL){
                 this->next_destination = this->current_destination->left;
                 this->is_moving = true;
-            }
-            else{
-//                this->keepGoingOrStop();
             }
             break;
     }
@@ -104,7 +68,7 @@ void PacMan::moveToDestination(){
                 this->location.setY(this->current_destination->location.y());
                 this->current_destination = this->next_destination;
                 this->nextDestinationHandler();
-                this->direction = this->last_clicked_button;
+                this->directionHandler();
             }else{
                 this->location.setY(this->location.y() - this->movementScale);
             }
@@ -116,7 +80,7 @@ void PacMan::moveToDestination(){
                 this->location.setX(this->current_destination->location.x());
                 this->current_destination = this->next_destination;
                 this->nextDestinationHandler();
-                this->direction = this->last_clicked_button;
+                this->directionHandler();
             }else{
                 this->location.setX(this->location.x() + this->movementScale);
             }
@@ -128,7 +92,7 @@ void PacMan::moveToDestination(){
                 this->location.setY(this->current_destination->location.y());
                 this->current_destination = this->next_destination;
                 this->nextDestinationHandler();
-                this->direction = this->last_clicked_button;
+                this->directionHandler();
             }else{
                 this->location.setY(this->location.y() + this->movementScale);
             }
@@ -140,7 +104,7 @@ void PacMan::moveToDestination(){
                 this->location.setX(this->current_destination->location.x());
                 this->current_destination = this->next_destination;
                 this->nextDestinationHandler();
-                this->direction = this->last_clicked_button;
+                this->directionHandler();
             }else{
                 this->location.setX(this->location.x() - this->movementScale);
             }
