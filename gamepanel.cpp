@@ -16,17 +16,24 @@ GamePanel::GamePanel(QWidget *parent)
     this->pacman.current_destination = this->first_gridpoint->right;
     this->pacman.next_destination = this->first_gridpoint->right->right;
 
-//    this->animationThread = new std::thread([this](){
-//        while(true){
-//            this->pacman.animation_state_handler();
+    this->animationThread = new std::thread([this](){
+        while(true){
+            this->pacman.animation_state_handler();
 //            this->repaint();
-//            std::this_thread::sleep_for(std::chrono::milliseconds(500));
-//        }
-//    });
+            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        }
+    });
 
     this->movementThread = new std::thread([this](){
         while(true){
             this->pacman.moveToDestination();
+//            this->repaint();
+            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        }
+    });
+
+    this->repaintThread = new std::thread([this](){
+        while(true){
             this->repaint();
             std::this_thread::sleep_for(std::chrono::milliseconds(50));
         }
@@ -94,6 +101,24 @@ void GamePanel::gridPointsLocator(){
     GridPoint* O1 = new GridPoint(317,25);
     GridPoint* P1 = new GridPoint(479,25);
 
+
+    GridPoint* A2 = new GridPoint(643,297);
+    GridPoint* B2 = new GridPoint(721,297);
+    GridPoint* C2 = new GridPoint(858,297);
+    GridPoint* D2 = new GridPoint(559,232);
+    GridPoint* E2 = new GridPoint(643,232);
+    GridPoint* F2 = new GridPoint(559,170);
+    GridPoint* G2 = new GridPoint(643,170);
+    GridPoint* H2 = new GridPoint(721,170);
+    GridPoint* I2 = new GridPoint(858,170);
+    GridPoint* J2 = new GridPoint(559,108);
+    GridPoint* K2 = new GridPoint(643,108);
+    GridPoint* L2 = new GridPoint(721,108);
+    GridPoint* M2 = new GridPoint(858,108);
+    GridPoint* N2 = new GridPoint(559,25);
+    GridPoint* O2 = new GridPoint(721,25);
+    GridPoint* P2 = new GridPoint(858,25);
+
     this->first_gridpoint->right = B1;
 
     B1->left = this->first_gridpoint;
@@ -108,6 +133,7 @@ void GamePanel::gridPointsLocator(){
 
     E1->left = D1;
     E1->up = I1;
+    E1->right = D2;
 
     F1->right = G1;
     F1->up = J1;
@@ -137,6 +163,7 @@ void GamePanel::gridPointsLocator(){
 
     M1->left = L1;
     M1->up = P1;
+    M1->right = J2;
 
     N1->right = O1;
     N1->down = J1;
@@ -147,5 +174,63 @@ void GamePanel::gridPointsLocator(){
 
     P1->left = O1;
     P1->down = M1;
+
+    A2->up = E2;
+    A2->right = B2;
+
+    B2->up = H2;
+    B2->left = A2;
+    B2->right = C2;
+
+    C2->left = B2;
+
+    D2->right = E2;
+    D2->left = E1;
+    D2->up = F2;
+
+    E2->down = A2;
+    E2->left = D2;
+
+    F2->right = G2;
+    F2->down = D2;
+
+    G2->left = F2;
+    G2->up = K2;
+
+    H2->right = I2;
+    H2->up = L2;
+    H2->down = B2;
+
+    I2->left = H2;
+    I2->up = M2;
+
+    J2->right = K2;
+    J2->up = N2;
+    J2->left = M1;
+
+    K2->right = L2;
+    K2->down = G2;
+    K2->left = J2;
+
+    L2->up = O2;
+    L2->right = M2;
+    L2->left = K2;
+    L2->down = H2;
+
+    M2->up = P2;
+    M2->left = L2;
+    M2->down = I2;
+
+    N2->right = O2;
+    N2->down = J2;
+
+    O2->left = N2;
+    O2->down = L2;
+    O2->right = P2;
+
+    P2->left = O2;
+    P2->down = M2;
+
+
 
 }

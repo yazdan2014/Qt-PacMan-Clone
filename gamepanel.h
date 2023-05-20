@@ -35,7 +35,7 @@ private:
     int score = 0;
     std::thread* movementThread;
     std::thread* animationThread;
-
+    std::thread* repaintThread;
 Q_OBJECT
 
 };
