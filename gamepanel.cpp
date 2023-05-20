@@ -20,25 +20,13 @@ GamePanel::GamePanel(QWidget *parent)
         while(true){
             this->pacman.animation_state_handler();
 //            this->repaint();
-<<<<<<< HEAD:FinalAP/gamepanel.cpp
-<<<<<<< HEAD:gamepanel.cpp
             std::this_thread::sleep_for(std::chrono::milliseconds(50));
         }
     });
-=======
-//            std::this_thread::sleep_for(std::chrono::milliseconds(300));
-=======
-//            std::this_thread::sleep_for(std::chrono::milliseconds(500));
->>>>>>> parent of 00a2d2c (adding builds):gamepanel.cpp
-//        }
-//    });
->>>>>>> cd4bd18c89e216f5e8c76d75c311d2aaf6163131:FinalAP/gamepanel.cpp
 
     this->movementThread = new std::thread([this](){
         while(true){
             this->pacman.moveToDestination();
-<<<<<<< HEAD:FinalAP/gamepanel.cpp
-<<<<<<< HEAD:gamepanel.cpp
 //            this->repaint();
             std::this_thread::sleep_for(std::chrono::milliseconds(50));
         }
@@ -46,11 +34,6 @@ GamePanel::GamePanel(QWidget *parent)
 
     this->repaintThread = new std::thread([this](){
         while(true){
-=======
-            this->pacman.animation_state_handler();
->>>>>>> cd4bd18c89e216f5e8c76d75c311d2aaf6163131:FinalAP/gamepanel.cpp
-=======
->>>>>>> parent of 00a2d2c (adding builds):gamepanel.cpp
             this->repaint();
             std::this_thread::sleep_for(std::chrono::milliseconds(50));
         }
