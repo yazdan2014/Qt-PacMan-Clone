@@ -11,6 +11,7 @@
 
 #include "pacman.h"
 #include "gridpoint.h"
+#include "ghost.h"
 
 class GamePanel : public QWidget
 {
@@ -27,11 +28,13 @@ public:
 
     void gridPointsLocator();
     GridPoint* first_gridpoint = new GridPoint(165,297);
+    GridPoint* ghost_first_gridpoint;
 
 
 
 private:
     PacMan pacman;
+    Ghost ghost;
     int score = 0;
     std::thread* movementThread;
     std::thread* animationThread;

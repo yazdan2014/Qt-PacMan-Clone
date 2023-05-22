@@ -16,6 +16,8 @@ GamePanel::GamePanel(QWidget *parent)
     this->pacman.current_destination = this->first_gridpoint->right;
     this->pacman.next_destination = this->first_gridpoint->right->right;
 
+    this->ghost.current_destination = this->ghost_first_gridpoint->left;
+
     this->animationThread = new std::thread([this](){
         while(true){
             this->pacman.animation_state_handler();
@@ -27,6 +29,7 @@ GamePanel::GamePanel(QWidget *parent)
     this->movementThread = new std::thread([this](){
         while(true){
             this->pacman.moveToDestination();
+            this->ghost.moveToDestination();
 //            this->repaint();
             std::this_thread::sleep_for(std::chrono::milliseconds(50));
         }
@@ -47,6 +50,7 @@ void GamePanel::paintEvent(QPaintEvent* event){
     painter.drawPixmap(0,0,1080,720,pixmap);
 
     this->pacman.draw(&painter);
+    this->ghost.draw(&painter);
 
     QRect score_board(60,90, 50 , 50);
     QFont font=painter.font() ;
@@ -183,6 +187,7 @@ void GamePanel::gridPointsLocator(){
     B2->right = C2;
 
     C2->left = B2;
+    this->ghost_first_gridpoint = C2;
 
     D2->right = E2;
     D2->left = E1;

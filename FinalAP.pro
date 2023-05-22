@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     gamepanel.cpp \
+    ghost.cpp \
     gridpoint.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -17,6 +18,7 @@ SOURCES += \
 
 HEADERS += \
     gamepanel.h \
+    ghost.h \
     gridpoint.h \
     mainwindow.h \
     pacman.h

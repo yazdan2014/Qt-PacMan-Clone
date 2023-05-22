@@ -3,6 +3,7 @@
 #include <QPainter>
 #include<QDebug>
 
+
 PacMan::PacMan(QWidget *parent)
     : QWidget{parent}
 {
@@ -34,142 +35,142 @@ void PacMan::directionHandler(){
 
 void PacMan::nextDestinationHandler(){
     switch(last_clicked_button){
-        case Up:
-            if(this->current_destination->up != NULL){
-                this->is_moving = true;
-                this->next_destination = this->current_destination->up;
-            }
-            break;
-        case Right:
-            if(this->current_destination->right != NULL){
-                this->next_destination = this->current_destination->right;
-                this->is_moving = true;
-            }
-            break;
-        case Down:
-            if(this->current_destination->down != NULL){
-                this->next_destination = this->current_destination->down;
-                this->is_moving = true;
-            }
-            break;
-        case Left:
-            if(this->current_destination->left != NULL){
-                this->next_destination = this->current_destination->left;
-                this->is_moving = true;
-            }
-            break;
+    case Up:
+        if(this->current_destination->up != NULL){
+            this->is_moving = true;
+            this->next_destination = this->current_destination->up;
+        }
+        break;
+    case Right:
+        if(this->current_destination->right != NULL){
+            this->next_destination = this->current_destination->right;
+            this->is_moving = true;
+        }
+        break;
+    case Down:
+        if(this->current_destination->down != NULL){
+            this->next_destination = this->current_destination->down;
+            this->is_moving = true;
+        }
+        break;
+    case Left:
+        if(this->current_destination->left != NULL){
+            this->next_destination = this->current_destination->left;
+            this->is_moving = true;
+        }
+        break;
     }
 }
 
 void PacMan::moveToDestination(){
     switch(this->direction){
-        case Up:
-            if(this->location.y() - this->movementScale < this->current_destination->location.y()){
-                this->location.setY(this->current_destination->location.y());
-                this->current_destination = this->next_destination;
-                this->nextDestinationHandler();
-                this->directionHandler();
-            }else{
-                this->location.setY(this->location.y() - this->movementScale);
-            }
+    case Up:
+        if(this->location.y() - this->movementScale < this->current_destination->location.y()){
+            this->location.setY(this->current_destination->location.y());
+            this->current_destination = this->next_destination;
+            this->nextDestinationHandler();
+            this->directionHandler();
+        }else{
+            this->location.setY(this->location.y() - this->movementScale);
+        }
 
-            break;
+        break;
 
-        case Right:
-            if(this->location.x() + this->movementScale > this->current_destination->location.x()){
-                this->location.setX(this->current_destination->location.x());
-                this->current_destination = this->next_destination;
-                this->nextDestinationHandler();
-                this->directionHandler();
-            }else{
-                this->location.setX(this->location.x() + this->movementScale);
-            }
+    case Right:
+        if(this->location.x() + this->movementScale > this->current_destination->location.x()){
+            this->location.setX(this->current_destination->location.x());
+            this->current_destination = this->next_destination;
+            this->nextDestinationHandler();
+            this->directionHandler();
+        }else{
+            this->location.setX(this->location.x() + this->movementScale);
+        }
 
-            break;
+        break;
 
-        case Down:
-            if(this->location.y() + this->movementScale > this->current_destination->location.y()){
-                this->location.setY(this->current_destination->location.y());
-                this->current_destination = this->next_destination;
-                this->nextDestinationHandler();
-                this->directionHandler();
-            }else{
-                this->location.setY(this->location.y() + this->movementScale);
-            }
+    case Down:
+        if(this->location.y() + this->movementScale > this->current_destination->location.y()){
+            this->location.setY(this->current_destination->location.y());
+            this->current_destination = this->next_destination;
+            this->nextDestinationHandler();
+            this->directionHandler();
+        }else{
+            this->location.setY(this->location.y() + this->movementScale);
+        }
 
-            break;
+        break;
 
-        case Left:
-            if(this->location.x() - this->movementScale < this->current_destination->location.x()){
-                this->location.setX(this->current_destination->location.x());
-                this->current_destination = this->next_destination;
-                this->nextDestinationHandler();
-                this->directionHandler();
-            }else{
-                this->location.setX(this->location.x() - this->movementScale);
-            }
+    case Left:
+        if(this->location.x() - this->movementScale < this->current_destination->location.x()){
+            this->location.setX(this->current_destination->location.x());
+            this->current_destination = this->next_destination;
+            this->nextDestinationHandler();
+            this->directionHandler();
+        }else{
+            this->location.setX(this->location.x() - this->movementScale);
+        }
 
-            break;
+        break;
     }
 }
 
 void PacMan::draw(QPainter* painter){
     QPixmap pixmap;
     switch(direction){
-        case Left:
-            switch(this->animation_state){
-                case 1:
-                    pixmap.load("media/pacman/left/1.png");
-                    break;
-                case 2:
-                    pixmap.load("media/pacman/left/2.png");
-                    break;
-                case 3:
-                    pixmap.load("media/pacman/left/3.png");
-                    break;
-            }
+    case Left:
+        switch(this->animation_state){
+        case 1:
+            pixmap.load("media/pacman/left/1.png");
+            break;
+        case 2:
+            pixmap.load("media/pacman/left/2.png");
+            break;
+        case 3:
+            pixmap.load("media/pacman/left/3.png");
+            break;
+        }
         break;
 
-        case Up:
-            switch(this->animation_state){
-                case 1:
-                    pixmap.load("media/pacman/up/1.png");
-                    break;
-                case 2:
-                    pixmap.load("media/pacman/up/2.png");
-                    break;
-                case 3:
-                    pixmap.load("media/pacman/up/3.png");
-                    break;
-            }
+    case Up:
+        switch(this->animation_state){
+        case 1:
+            pixmap.load("media/pacman/up/1.png");
+            break;
+        case 2:
+            pixmap.load("media/pacman/up/2.png");
+            break;
+        case 3:
+            pixmap.load("media/pacman/up/3.png");
+            break;
+        }
         break;
 
-        case Right:
-            switch(this->animation_state){
-            case 1:
-                    pixmap.load("media/pacman/right/1.png");
-                    break;
-            case 2:
-                    pixmap.load("media/pacman/right/2.png");
-                    break;
-            case 3:
-                    pixmap.load("media/pacman/right/3.png");
-                    break;
-            }
+    case Right:
+        switch(this->animation_state){
+        case 1:
+            pixmap.load("media/pacman/right/1.png");
+            break;
+        case 2:
+            pixmap.load("media/pacman/right/2.png");
+            break;
+        case 3:
+            pixmap.load("media/pacman/right/3.png");
+            break;
+        }
         break;
 
-        case Down:
-            switch(this->animation_state){
-            case 1:
-                    pixmap.load("media/pacman/down/1.png");
-                    break;
-            case 2:
-                    pixmap.load("media/pacman/down/2.png");
-                    break;
-            case 3:
-                    pixmap.load("media/pacman/down/3.png");
-                    break;
-            }
+    case Down:
+        switch(this->animation_state){
+        case 1:
+            pixmap.load("media/pacman/down/1.png");
+            break;
+        case 2:
+            pixmap.load("media/pacman/down/2.png");
+            break;
+        case 3:
+            pixmap.load("media/pacman/down/3.png");
+            break;
+        }
         break;
     }
 

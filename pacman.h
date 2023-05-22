@@ -31,7 +31,6 @@ public:
     GridPoint* next_destination;
     Direction last_clicked_button;
 
-    void keepGoingOrStop();
     void nextDestinationHandler();
     void directionHandler();
 
