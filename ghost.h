@@ -25,7 +25,7 @@ public:
 
     int movementScale = 10;
     bool is_moving = true;
-
+    std::string color;
 
 };
 

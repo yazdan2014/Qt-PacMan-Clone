@@ -6,6 +6,8 @@
 #include <ctime>
 #include <cstdlib>
 
+#include <QPainter>
+
 Ghost::Ghost(QWidget *parent)
     : QWidget{parent}
 {
@@ -168,19 +170,19 @@ void Ghost::draw(QPainter* painter){
     QPixmap pixmap;
     switch(direction){
     case Left:
-        pixmap.load("media/ghosts/red/left.png");
+        pixmap.load(QString::fromStdString("media/ghosts/"+ this->color +"/left.png"));
         break;
 
     case Up:
-        pixmap.load("media/ghosts/red/up.png");
+        pixmap.load(QString::fromStdString("media/ghosts/"+ this->color +"/up.png"));
         break;
 
     case Right:
-        pixmap.load("media/ghosts/red/right.png");
+        pixmap.load(QString::fromStdString("media/ghosts/"+ this->color +"/right.png"));
         break;
 
     case Down:
-        pixmap.load("media/ghosts/red/down.png");
+        pixmap.load(QString::fromStdString("media/ghosts/"+ this->color +"/down.png"));
         break;
     }
 

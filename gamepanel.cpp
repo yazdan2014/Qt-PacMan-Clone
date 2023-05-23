@@ -9,36 +9,39 @@
 GamePanel::GamePanel(QWidget *parent)
 : QWidget{parent}
 {
+    this->red_ghost.color = "red";
+
     gridPointsLocator();
+
 
     this->setFocusPolicy(Qt::StrongFocus);
 
     this->pacman.current_destination = this->first_gridpoint->right;
     this->pacman.next_destination = this->first_gridpoint->right->right;
 
-    this->ghost.current_destination = this->ghost_first_gridpoint->left;
+    this->red_ghost.current_destination = this->ghost_first_gridpoint->left;
 
     this->animationThread = new std::thread([this](){
         while(true){
             this->pacman.animation_state_handler();
 //            this->repaint();
-            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
     });
 
     this->movementThread = new std::thread([this](){
         while(true){
             this->pacman.moveToDestination();
-            this->ghost.moveToDestination();
+            this->red_ghost.moveToDestination();
 //            this->repaint();
-            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
     });
 
     this->repaintThread = new std::thread([this](){
         while(true){
             this->repaint();
-            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
     });
 }
@@ -50,7 +53,7 @@ void GamePanel::paintEvent(QPaintEvent* event){
     painter.drawPixmap(0,0,1080,720,pixmap);
 
     this->pacman.draw(&painter);
-    this->ghost.draw(&painter);
+    this->red_ghost.draw(&painter);
 
     QRect score_board(60,90, 50 , 50);
     QFont font=painter.font() ;

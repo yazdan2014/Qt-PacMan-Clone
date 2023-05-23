@@ -34,7 +34,9 @@ public:
 
 private:
     PacMan pacman;
-    Ghost ghost;
+    Ghost red_ghost;
+    Ghost blue_ghost;
+
     int score = 0;
     std::thread* movementThread;
     std::thread* animationThread;
