@@ -34,13 +34,15 @@ public:
     GridPoint* ghost_first_gridpoint;
 
 
-
+    void checkCoinCollected();
     bool checkLose();
+
 
 private:
     PacMan pacman;
     Ghost red_ghost;
     Ghost blue_ghost;
+    std::vector<Coin*> coins;
 
     int score = 0;
     std::thread* movementThread;

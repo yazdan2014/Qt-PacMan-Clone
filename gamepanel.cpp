@@ -13,6 +13,7 @@ GamePanel::GamePanel(QWidget *parent)
     this->blue_ghost.color = "blue";
 
     gridPointsLocator();
+    coinLocator();
 
 
     this->setFocusPolicy(Qt::StrongFocus);
@@ -27,7 +28,8 @@ GamePanel::GamePanel(QWidget *parent)
         while(true){
             this->pacman.animation_state_handler();
 //            this->repaint();
-            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
         }
     });
 
@@ -36,6 +38,7 @@ GamePanel::GamePanel(QWidget *parent)
             this->pacman.moveToDestination();
             this->red_ghost.moveToDestination();
             this->blue_ghost.moveToDestination();
+            this->checkCoinCollected();
 //            this->repaint();
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
             if (checkLose()){
@@ -47,7 +50,7 @@ GamePanel::GamePanel(QWidget *parent)
     this->repaintThread = new std::thread([this](){
         while(true){
             this->repaint();
-            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
             if (checkLose()){
                 break;
             }
@@ -61,9 +64,17 @@ void GamePanel::paintEvent(QPaintEvent* event){
     pixmap.load("media/background.jpg");
     painter.drawPixmap(0,0,1080,720,pixmap);
 
+    for(Coin* coin:coins){
+        if(coin->is_collected) continue;
+        coin->draw(&painter);
+    }
+    this->coins[50]->draw(&painter);
+
     this->pacman.draw(&painter);
     this->red_ghost.draw(&painter);
     this->blue_ghost.draw(&painter);
+
+
 
     QRect score_board(60,90, 50 , 50);
     QFont font=painter.font() ;
@@ -90,6 +101,19 @@ void GamePanel::keyPressEvent(QKeyEvent *event){
         break;
     }
     this->pacman.nextDestinationHandler();
+}
+
+void GamePanel::checkCoinCollected(){
+    for(Coin* coin:coins){
+        if(coin->is_collected) continue;
+        if((pacman.location.x() <= coin->location.x()+3 &&  pacman.location.x() + 30 >= coin->location.x() + 3)
+            && (pacman.location.y() <= coin->location.y()+3 &&  pacman.location.y() + 30 >= coin->location.y() + 3)
+            ){
+            coin->is_collected = true;
+            score++;
+        }
+    }
+
 }
 
 void GamePanel::setScore(int new_score){
@@ -120,19 +144,19 @@ void GamePanel::coinLocator(){
 
     std::vector<Coordinate> locations = {
         {334,289}, {334,268}, {334,247}, {334,226}, {334,205}, {334,184},
-        {334,121}, {334,100}, {334,79},  {334,58},  {334,37},  {307,121},
+        {334,121}, {334,100}, {334,79},  {334,58},  {334,37},  {307,121},{334,163},
         {281,121}, {255,121}, {228,121}, {307,184}, {281,184}, {255,184},
         {229,184}, {202,184}, {202,163}, {202,142}, {202,121}, {202,100},
         {202,79},  {202,58},  {202,37},  {228,37},  {252,37},  {281,37},  //Layer 57
         {308,37},  {361,121}, {413,121}, {440,121}, {466,121}, {493,121}, //Layer 64
         {493,100}, {493,79},  {493,58},  {493,37},  {466,37},  {413,37},  //Layer 70
         {440,37},  {387,37},  {361,37},  {413,142}, {413,164}, {413,184}, //Layer 76
-        {440,184}, {466,184}, {493,184}, {519,121}, {546,121}, {572,121}, //Layer 82
-        {573,183}, {626,184}, {625,184}, {652,163}, {652,142}, {599,122}, //Layer 89
+        {440,184}, {466,184}, {519,121}, {546,121}, {572,121},            //Layer 82
+        {573,183}, {626,184}, {652,184}, {652,163}, {652,142}, {599,122}, //Layer 89
         {626,121}, {652,121}, {572,100}, {572,79},  {572,58},  {572,37},  //Layer 95
         {678,121}, {599,37},  {626,37},  {652,37},  {678,37},  {705,37},  //Layer 101
         {731,37},  {731,58},  {731,79},  {731,100}, {704,121}, {731,121}, //Layer 107
-        {758,121}, {758,37},  {785,37},  {811,37},  {837,37},  {864,37},  //Layer 113
+        {785,121}, {758,37},  {785,37},  {811,37},  {837,37},  {864,37},  //Layer 113
         {864,58},  {864,79},  {864,100}, {864,121}, {837,121}, {758,121}, //Layer 119
         {811,121}, {731,142}, {731,163}, {731,184}, {864,142}, {864,163}, //Layer 125
         {864,184}, {758,184}, {785,184}, {811,184}, {837,184}, {731,205}, //Layer 131
@@ -146,8 +170,8 @@ void GamePanel::coinLocator(){
         {705,625}, {678,625}, {652,625}, {625,625}, {599,625}, {573,625}, //Layer 179
         {546,625}, {519,625}, {493,625}, {466,625}, {440,625}, {387,625}, //Layer 186
         {361,625}, {334,625}, {308,625}, {281,625}, {255,625}, {228,625}, //Layer 192
-        {202,625}, {262,604}, {202,583}, {202,562}, {228,562}, {255,562}, //Layer 198
-        {281,562}, {308,562}, {334,562}, {334,541}, {334,520}, {360,499}, //Layer 204
+        {202,625}, {202,604}, {202,583}, {202,562}, {228,562}, {255,562}, //Layer 198
+        {281,562}, {308,562}, {334,562}, {334,541}, {334,520}, {334,499}, //Layer 204
         {360,499}, {334,478}, {334,457}, {254,541}, {254,520}, {255,499}, //Layer 210
         {228,499}, {202,499}, {202,478}, {202,457}, {202,436}, {228,436}, //Layer 216
         {255,436}, {281,436}, {308,436}, {334,436}, {361,436}, {334,415}, //Layer 222
@@ -156,16 +180,17 @@ void GamePanel::coinLocator(){
         {493,499}, {387,499}, {413,499}, {440,499}, {467,499}, {413,519}, //Layer 240
         {413,542}, {413,562}, {440,562}, {466,562}, {493,562}, {493,583}, //Layer 246
         {493,604}, {573,604}, {573,583}, {573,562}, {599,562}, {626,562}, //Layer 252
-        {652,562}, {562,541}, {652,519}, {652,499}, {679,499}, {705,499}, //Layer 258
+        {652,562}, {652,541}, {652,519}, {652,499}, {679,499}, {705,499}, //Layer 258
         {626,499}, {599,499}, {572,499}, {572,478}, {572,457}, {572,436}, //Layer 264
         {599,436}, {626,436}, {652,436}, {678,436}, {705,436}, {413,625}, //Layrt 270
         {599,184}, {387,121}, {334,142}
-         
-        
-
-
-
     };
+
+    for(auto coordinate:locations){
+        Coin* new_coin = new Coin(coordinate.x, coordinate.y);
+        this->coins.push_back(new_coin);
+
+    }
 }
 
 void GamePanel::gridPointsLocator(){

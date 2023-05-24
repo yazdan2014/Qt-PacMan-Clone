@@ -1,6 +1,7 @@
 #include "coin.h"
 #include <QPixmap>
 #include <QPainter>
+#include "pacman.h"
 
 Coin::Coin(QWidget *parent)
     : QWidget{parent}
@@ -10,8 +11,9 @@ Coin::Coin(QWidget *parent)
 
 void Coin::draw(QPainter* painter){
     QPixmap pixmap;
-    pixmap.load("media/pacman/left/3.png");
-    painter->drawPixmap(location.x(),location.y(),50,50,pixmap);
+    pixmap.load("media/coin.png");
+    painter->drawPixmap(location.x(),location.y(),pixmap);
+
 }
 
 Coin::Coin(int x, int y){
