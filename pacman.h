@@ -34,7 +34,7 @@ public:
     void nextDestinationHandler();
     void directionHandler();
 
-    int movementScale = 10;
+    int movementScale = 1;
     bool is_moving = true;
 
 

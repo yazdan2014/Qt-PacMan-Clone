@@ -12,6 +12,8 @@
 #include "pacman.h"
 #include "gridpoint.h"
 #include "ghost.h"
+#include "coin.h"
+
 
 class GamePanel : public QWidget
 {
@@ -27,10 +29,13 @@ public:
     void setScore(int);
 
     void gridPointsLocator();
+    void coinLocator();
     GridPoint* first_gridpoint = new GridPoint(165,297);
     GridPoint* ghost_first_gridpoint;
 
 
+
+    bool checkLose();
 
 private:
     PacMan pacman;

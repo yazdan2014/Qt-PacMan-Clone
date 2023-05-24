@@ -23,7 +23,7 @@ public:
     void directionHandler();
     void randomNewDestination();
 
-    int movementScale = 10;
+    int movementScale = 1;
     bool is_moving = true;
     std::string color;
 

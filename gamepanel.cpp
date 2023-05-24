@@ -3,13 +3,14 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QPoint>
-#include<QDebug>
+#include <QDebug>
 #include <QKeyEvent>
 
 GamePanel::GamePanel(QWidget *parent)
 : QWidget{parent}
 {
     this->red_ghost.color = "red";
+    this->blue_ghost.color = "blue";
 
     gridPointsLocator();
 
@@ -20,12 +21,13 @@ GamePanel::GamePanel(QWidget *parent)
     this->pacman.next_destination = this->first_gridpoint->right->right;
 
     this->red_ghost.current_destination = this->ghost_first_gridpoint->left;
+    this->blue_ghost.current_destination =this->ghost_first_gridpoint->left;
 
     this->animationThread = new std::thread([this](){
         while(true){
             this->pacman.animation_state_handler();
 //            this->repaint();
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            std::this_thread::sleep_for(std::chrono::milliseconds(50));
         }
     });
 
@@ -33,15 +35,22 @@ GamePanel::GamePanel(QWidget *parent)
         while(true){
             this->pacman.moveToDestination();
             this->red_ghost.moveToDestination();
+            this->blue_ghost.moveToDestination();
 //            this->repaint();
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+            if (checkLose()){
+                break;
+            }
         }
     });
 
     this->repaintThread = new std::thread([this](){
         while(true){
             this->repaint();
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+            if (checkLose()){
+                break;
+            }
         }
     });
 }
@@ -54,6 +63,7 @@ void GamePanel::paintEvent(QPaintEvent* event){
 
     this->pacman.draw(&painter);
     this->red_ghost.draw(&painter);
+    this->blue_ghost.draw(&painter);
 
     QRect score_board(60,90, 50 , 50);
     QFont font=painter.font() ;
@@ -90,11 +100,52 @@ int GamePanel::getScore(){
     return score;
 }
 
+bool GamePanel::checkLose(){
+    if(((this->pacman.location.x()+15 <= this->blue_ghost.location.x()+30 &&  this->pacman.location.x()+15 >= this->blue_ghost.location.x())
+         && (this->pacman.location.y()+15 <= this->blue_ghost.location.y()+30 &&  this->pacman.location.y()+15 >= this->blue_ghost.location.y()))
+        ||
+        ((this->pacman.location.x()+15 <= this->red_ghost.location.x()+30 &&  this->pacman.location.x()+15 >= this->red_ghost.location.x())
+         && (this->pacman.location.y()+15 <= this->red_ghost.location.y()+30 &&  this->pacman.location.y()+15 >= this->red_ghost.location.y()))
+        ){
+        return true;
+    }
+    return false;
+}
+
+void GamePanel::coinLocator(){
+    struct Coordinate{
+        int x;
+        int y;
+    };
+
+    std::vector<Coordinate> locations = {
+        {334,289},{334,268},{334,247},{334,226},{334,205},{334,184},
+        {334,121},{334,100},{334,79},{334,58},{334,37},{307,121},
+        {281,121},{255,121},{228,121},{307,184},{281,184},{255,184},
+        {229,184},{202,184},{202,163},{202,142},{202,121},{202,100},
+        {202,79},{202,58},{202,37},{228,37},{252,37},{281,37}, //Layer 57
+        {308,37},{361,121},{413,121},{440,121},{466,121},{493,121}, //Layer 64
+        {493,100},{493,79},{493,58},{493,37},{466,37},{413,37}, //Layer 70
+        {440,37},{387,37},{361,37},{413,142},{413,164},{413,184}, //Layer 76
+        {440,184},{466,184},{493,184},{519,121},{546,121},{572,121}, //Layer 82
+        {573,183},{626,184},{625,184},{652,163},{652,142},{599,122}, //Layer 89
+        {626,121},{652,121},{572,100},{572,79},{572,58},{572,37}, //Layer 95
+        {678,121},{599,37},{626,37},{652,37},{678,37},{705,37}, //Layer 101
+        {731,37},{731,58},{731,79},{731,100},{704,121},{731,121},
+        {,},{,},{,},{,},{,},{,},
+        {,},{,},{,},{,},{,},{,},
+        {,},{,},{,},{,},{,},{,},
+        {,},{,},{,},{,},{,},{,},
+
+
+    };
+}
+
 void GamePanel::gridPointsLocator(){
 //    this->first_gridpoint;
-    GridPoint* B1 = new GridPoint(317,297);
-    GridPoint* C1 = new GridPoint(398,297);
-    GridPoint* D1 = new GridPoint(398,232);
+    GridPoint* B1 = new GridPoint(320,297);
+    GridPoint* C1 = new GridPoint(399,297);
+    GridPoint* D1 = new GridPoint(399,232);
     GridPoint* E1 = new GridPoint(479,232);
     GridPoint* F1 = new GridPoint(180,170);
     GridPoint* G1 = new GridPoint(317,170);
@@ -238,7 +289,6 @@ void GamePanel::gridPointsLocator(){
 
     P2->left = O2;
     P2->down = M2;
-
-
-
 }
+
+

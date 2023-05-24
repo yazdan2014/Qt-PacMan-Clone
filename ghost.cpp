@@ -1,4 +1,3 @@
-
 #include "ghost.h"
 #include <QPainter>
 
