@@ -195,9 +195,9 @@ void GamePanel::coinLocator(){
 
 void GamePanel::gridPointsLocator(){
 //    this->first_gridpoint;
-    GridPoint* B1 = new GridPoint(320,297);
-    GridPoint* C1 = new GridPoint(399,297);
-    GridPoint* D1 = new GridPoint(399,232);
+    GridPoint* B1 = new GridPoint(317,297);
+    GridPoint* C1 = new GridPoint(398,297);
+    GridPoint* D1 = new GridPoint(398,232);
     GridPoint* E1 = new GridPoint(479,232);
     GridPoint* F1 = new GridPoint(180,170);
     GridPoint* G1 = new GridPoint(317,170);
@@ -228,6 +228,9 @@ void GamePanel::gridPointsLocator(){
     GridPoint* N2 = new GridPoint(559,25);
     GridPoint* O2 = new GridPoint(721,25);
     GridPoint* P2 = new GridPoint(858,25);
+
+
+
 
     this->first_gridpoint->right = B1;
 
