@@ -76,7 +76,7 @@ void GamePanel::paintEvent(QPaintEvent* event){
 
 
 
-    QRect score_board(60,90, 50 , 50);
+    QRect score_board(60,90, 100 , 50);
     QFont font=painter.font() ;
     font.setBold(true);
     font.setPointSize(30);
@@ -151,7 +151,7 @@ void GamePanel::coinLocator(){
         {308,37},  {361,121}, {413,121}, {440,121}, {466,121}, {493,121}, //Layer 64
         {493,100}, {493,79},  {493,58},  {493,37},  {466,37},  {413,37},  //Layer 70
         {440,37},  {387,37},  {361,37},  {413,142}, {413,164}, {413,184}, //Layer 76
-        {440,184}, {466,184}, {519,121}, {546,121}, {572,121},            //Layer 82
+        {440,184}, {493,184}, {519,121}, {546,121}, {572,121}, //{465,184}, Layer 82
         {573,183}, {626,184}, {652,184}, {652,163}, {652,142}, {599,122}, //Layer 89
         {626,121}, {652,121}, {572,100}, {572,79},  {572,58},  {572,37},  //Layer 95
         {678,121}, {599,37},  {626,37},  {652,37},  {678,37},  {705,37},  //Layer 101
@@ -229,17 +229,52 @@ void GamePanel::gridPointsLocator(){
     GridPoint* O2 = new GridPoint(721,25);
     GridPoint* P2 = new GridPoint(858,25);
 
+    GridPoint* A3 = new GridPoint(398,360);
+    GridPoint* B3 = new GridPoint(180,424);
+    GridPoint* C3 = new GridPoint(317,424);
+    GridPoint* D3 = new GridPoint(398,424);
+    GridPoint* E3 = new GridPoint(479,424);
+    GridPoint* F3 = new GridPoint(180,485);
+    GridPoint* G3 = new GridPoint(237,485);
+    GridPoint* H3 = new GridPoint(317,485);
+    GridPoint* I3 = new GridPoint(398,485);
+    GridPoint* J3 = new GridPoint(479,485);
+    GridPoint* K3 = new GridPoint(180,549);
+    GridPoint* L3 = new GridPoint(237,549);
+    GridPoint* M3 = new GridPoint(317,549);
+    GridPoint* N3 = new GridPoint(398,549);
+    GridPoint* O3 = new GridPoint(479,549);
+    GridPoint* P3 = new GridPoint(180,613);
+    GridPoint* Q3 = new GridPoint(479,613);
 
-
+    GridPoint* A4 = new GridPoint(643,360);
+    GridPoint* B4 = new GridPoint(559,424);
+    GridPoint* C4 = new GridPoint(643,424);
+    GridPoint* D4 = new GridPoint(721,424);
+    GridPoint* E4 = new GridPoint(858,424);
+    GridPoint* F4 = new GridPoint(559,485);
+    GridPoint* G4 = new GridPoint(643,485);
+    GridPoint* H4 = new GridPoint(721,485);
+    GridPoint* I4 = new GridPoint(801,485);
+    GridPoint* J4 = new GridPoint(858,485);
+    GridPoint* K4 = new GridPoint(559,548);
+    GridPoint* L4 = new GridPoint(643,548);
+    GridPoint* M4 = new GridPoint(721,548);
+    GridPoint* N4 = new GridPoint(801,548);
+    GridPoint* O4 = new GridPoint(858,548);
+    GridPoint* P4 = new GridPoint(559,613);
+    GridPoint* Q4 = new GridPoint(858,613);
 
     this->first_gridpoint->right = B1;
 
     B1->left = this->first_gridpoint;
     B1->right = C1;
     B1->up = G1;
+    B1->down = C3;
 
     C1->left = B1;
     C1->up =D1;
+    C1->down = A3;
 
     D1->down = C1;
     D1->right = E1;
@@ -288,12 +323,16 @@ void GamePanel::gridPointsLocator(){
     P1->left = O1;
     P1->down = M1;
 
+
+
     A2->up = E2;
     A2->right = B2;
+    A2->down = A4;
 
     B2->up = H2;
     B2->left = A2;
     B2->right = C2;
+    B2->down = D4;
 
     C2->left = B2;
     this->ghost_first_gridpoint = C2;
@@ -344,6 +383,130 @@ void GamePanel::gridPointsLocator(){
 
     P2->left = O2;
     P2->down = M2;
+
+
+
+    A3->up = C1;
+    A3->down = D3;
+    A3->right = A4;
+
+    B3->right = C3;
+    B3->down = F3;
+
+    C3->up = B1;
+    C3->left = B3;
+    C3->right = D3;
+    C3->down = H3;
+
+    D3->up = A3;
+    D3->right = E3;
+    D3->left = C3;
+
+    E3->left = D3;
+    E3->down = J3;
+
+    F3->right = G3;
+    F3->up = B3;
+
+    G3->left = F3;
+    G3->down = L3;
+
+    H3->up = C3;
+    H3->right = I3;
+    H3->down = M3;
+
+    I3->right = J3;
+    I3->down = N3;
+    I3->left = H3;
+
+    J3->up = E3;
+    J3->left = I3;
+    J3->right = F4;
+
+    K3->right = L3;
+    K3->down = P3;
+
+    L3->left = K3;
+    L3->up = G3;
+    L3->right = M3;
+
+    M3->up = H3;
+    M3->left = L3;
+
+    N3->up = I3;
+    N3->right = O3;
+
+    O3->left = N3;
+    O3->down = Q3;
+
+    P3->right = Q3;
+    P3->up = K3;
+
+    Q3->up= O3;
+    Q3->left = P3;
+    Q3->right = P4;
+
+
+
+    A4->up = A2;
+    A4->left = A3;
+    A4->down = C4;
+
+    B4->right = C4;
+    B4->down = F4;
+
+    C4->up = A4;
+    C4->right = D4;
+    C4->left = B4;
+
+    D4->up = B2;
+    D4->left = C4;
+    D4->down = H4;
+    D4->right = E4;
+
+    E4->left = D4;
+    E4->down = J4;
+
+    F4->left = J3;
+    F4->up = B4;
+    F4->right =G4;
+
+    G4->left = F4;
+    G4->down = L4;
+    G4->right= H4;
+
+    H4->up = D4;
+    H4->left = G4;
+    H4->down = M4;
+
+    I4->down = N4;
+    I4->right = J4;
+
+    J4->up = E4;
+    J4->left = I4;
+
+    K4->right = L4;
+    K4->down = P4;
+
+    L4->left = K4;
+    L4->up = G4;
+
+    M4->up = H4;
+    M4->right = N4;
+
+    N4->left = M4;
+    N4->up = I4;
+    N4->right = O4;
+
+    O4->left = N4;
+    O4->down = Q4;
+
+    P4->left = Q3;
+    P4->right = Q4;
+    P4->up = K4;
+
+    Q4->up = O4;
+    Q4->left = P4;
 }
 
 
